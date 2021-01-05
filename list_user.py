@@ -17,7 +17,8 @@ PATH = './export/'
 LIST_CHANNEL_ID = [
     1286842538, # GDB
     1231642142, # Bénévoles
-    1266573038  # Bénévoles proches
+    1266573038, # Bénévoles proches
+    1175189547  # Bar
 ]
 
 client = TelegramClient('labase', os.getenv('API_ID'), os.getenv('API_HASH')).start()
