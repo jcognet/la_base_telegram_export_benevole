@@ -63,7 +63,7 @@ for d in client.get_dialogs():
                     re.sub(r'[^A-Za-z éàèô]+', '', d.name).strip()
                 )
 
-list_user_sorted = sorted(list_user.items(), key = lambda kv:(kv[1].get('first_name'), kv[0]))
+list_user_sorted = sorted(list_user.items(), key = lambda kv:(kv[1].get('was_online').strftime('%Y_%m_%d_%H_%M'), kv[0]))
 
 for u in list_user_sorted:
     print(
