@@ -17,7 +17,12 @@ PATH = './export/'
 LIST_CHANNEL_ID = [
     1286842538, # GDB
     1231642142, # Bénévoles
-    1266573038  # Bénévoles proches
+    1266573038, # Bénévoles proches
+    1175189547, # Bar
+    1458964230, # Programme
+    1432464780, # Logistique
+    1227095545, # Communication
+    1180317259  # Chaine de solidarité
 ]
 
 client = TelegramClient('labase', os.getenv('API_ID'), os.getenv('API_HASH')).start()
@@ -63,13 +68,17 @@ for d in client.get_dialogs():
                     re.sub(r'[^A-Za-z éàèô]+', '', d.name).strip()
                 )
 
-list_user_sorted = sorted(list_user.items(), key = lambda kv:(kv[1].get('was_online').strftime('%Y_%m_%d_%H_%M'), kv[0]))
+list_user_sorted = sorted(
+    list_user.items(),
+    key = lambda kv:(kv[1].get('was_online').strftime('%Y_%m_%d_%H_%M'), kv[0])
+)
 
 for u in list_user_sorted:
     print(
         u[1].get('id'),
         u[1].get('first_name'),
         u[1].get('last_name'),
+        u[1].get('username'),
         u[1].get('was_online').strftime('%d/%m/%Y %H:%M'),
         u[1].get('channels')
     )
@@ -80,7 +89,7 @@ if not os.path.isdir(PATH):
 
 now = datetime.datetime.now()
 with open(PATH+'/benevoles_'+now.strftime('%Y_%m_%d_%H_%M')+'.csv', mode='w') as benevole_file:
-    fieldnames = ['id', 'Prénom', 'Nom', 'Date de dernière connexion','Canaux']
+    fieldnames = ['id', 'Prénom', 'Nom', 'Pseudo', 'Date de dernière connexion','Canaux']
     benevole_writer = csv.writer(
         benevole_file,
         delimiter=',',
@@ -94,6 +103,7 @@ with open(PATH+'/benevoles_'+now.strftime('%Y_%m_%d_%H_%M')+'.csv', mode='w') as
             u[1].get('id'),
             u[1].get('first_name'),
             u[1].get('last_name'),
+            u[1].get('username'),
             u[1].get('was_online').strftime('%d/%m/%Y %H:%M'),
             u[1].get('channels')
         ])
